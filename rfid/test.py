@@ -4,7 +4,7 @@
 
 import sys
 from evdev import InputDevice, list_devices, ecodes, categorize
-
+from member import Member
     
 keyMap = {
     'KEY_A': "A",
@@ -49,6 +49,8 @@ def parseKey(val):
     return keyMap[val] if val in keyMap else ""
 
 if __name__ == "__main__":
+    m = Member("opc.db")
+
     print("Finding RFID USB reader...")
 
     event_id = None
@@ -67,7 +69,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     print("Getting exclusive access to the device...")
-    device.grab()
+    device.grab()	
 
     id = ""
 
@@ -80,7 +82,10 @@ if __name__ == "__main__":
                 id += parseKey(e.keycode)
                 #print(id)
             if len(id) is 14:
-                print(id)
+                #print(id)
+                member = m.getID(id)
+                if not member is "ERROR":
+                    print(member)
 
                 id = ""
                 print("Ready:")
