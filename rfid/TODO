@@ -3,3 +3,4 @@ TODO
 
 * Licence
 * slackbot
+* remove print() from member.py and use logging
