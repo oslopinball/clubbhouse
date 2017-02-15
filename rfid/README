@@ -1,0 +1,5 @@
+README
+======
+
+chmod +x test.py
+sudo ./test.py
