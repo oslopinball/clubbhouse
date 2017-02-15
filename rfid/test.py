@@ -22,3 +22,7 @@ if __name__ == "__main__":
     else:
         print("ERROR: no reader found")
         sys.exit(1)
+
+    print("Getting exclusive access to the device...")
+    device.grab()
+    device.ungrab()
