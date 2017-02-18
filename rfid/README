@@ -1,5 +1,8 @@
 README
 ======
 
+* create webhook_url: https://my.slack.com/services/new/incoming-webhook/
+* add webhook_url to test.py
+
 chmod +x test.py
 sudo ./test.py

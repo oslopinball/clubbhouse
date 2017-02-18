@@ -3,9 +3,11 @@
 # OEM RFID Keyboard Emulator
 
 import sys
+import json
+import requests
 from evdev import InputDevice, list_devices, ecodes, categorize
 from member import Member
-    
+
 keyMap = {
     'KEY_A': "A",
     'KEY_B': "B",
@@ -48,6 +50,20 @@ keyMap = {
 def parseKey(val):
     return keyMap[val] if val in keyMap else ""
 
+def slack(member):
+    webhook_url = ''
+    slack_data = {'text': ":key: *" + member + "* har sjekket inn på klubben :door:"}
+
+    response = requests.post(webhook_url, json=slack_data)
+
+    if response.status_code != 200:
+        raise ValueError(
+            'Request to slack returned an error %s, the response is:\n%s'
+            % (response.status_code, response.text)
+        )
+    elif response.status_code is 200:
+        print("message posted")
+
 if __name__ == "__main__":
     m = Member("opc.db")
 
@@ -69,7 +85,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     print("Getting exclusive access to the device...")
-    device.grab()	
+    device.grab()
 
     id = ""
 
@@ -86,6 +102,7 @@ if __name__ == "__main__":
                 member = m.getID(id)
                 if not member is "ERROR":
                     print(member)
+                    slack(member)
 
                 id = ""
                 print("Ready:")
