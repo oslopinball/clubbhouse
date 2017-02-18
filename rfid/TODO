@@ -2,6 +2,5 @@ TODO
 ====
 
 * Licence
-* slackbot
 * remove print() from member.py and use logging
 * add check-in sql table and function to member class

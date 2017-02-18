@@ -7,6 +7,7 @@ import json
 import requests
 from evdev import InputDevice, list_devices, ecodes, categorize
 from member import Member
+import config
 
 keyMap = {
     'KEY_A': "A",
@@ -51,10 +52,9 @@ def parseKey(val):
     return keyMap[val] if val in keyMap else ""
 
 def slack(member):
-    webhook_url = ''
     slack_data = {'text': ":key: *" + member + "* har sjekket inn på klubben :door:"}
 
-    response = requests.post(webhook_url, json=slack_data)
+    response = requests.post(config.webhook_url, json=slack_data)
 
     if response.status_code != 200:
         raise ValueError(
